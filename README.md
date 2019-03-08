@@ -33,7 +33,7 @@ Code/project developed by Thanayut T.<br>
 PC/SC wrapper classes for .NET developed by Daniel Mueller, see https://github.com/danm-de/pcsc-sharp/.
 
 ## License
-The license of this software is BSD 2-Clause License. Feel free to use, modify, redistribute under the BSD 2-Clause License. For more information see, LICENSE file.
+This software and its code license under BSD 2-Clause License. Feel free to use, modify, redistribute under the BSD 2-Clause License. For more information see: LICENSE file.
 
 Note: This software use PC/SC wrapper classes for .NET developed by Daniel Mueller, for license see: https://github.com/danm-de/pcsc-sharp/blob/master/COPYING.
 
