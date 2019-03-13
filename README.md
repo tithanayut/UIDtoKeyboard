@@ -20,6 +20,10 @@ The configuration is very simple. Simply plug in the PC/SC compatible reader. La
 
 To test the software, open notepad or program you wish to test with, put the card on the reader and the software should type in the card UID right away. 
 
+## Version
+-(Release 1) Version 1.0.0 : Inital Release
+-(Release 2) Version 1.1.0 : Add support for reading 7 Byte UID Card (i.e. Mifare Ultralight, Mifare DESfire)
+
 ## Built With
 This application is built using VB.Net on Visual Studio 2017 Community Edition. This software use PC/SC wrapper class for .NET by Daniel Mueller, for more information about this librarry see: https://github.com/danm-de/pcsc-sharp/
 
