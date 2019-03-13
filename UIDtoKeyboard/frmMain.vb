@@ -49,7 +49,11 @@ Public Class frmMain
     End Sub
 
     Sub cardInit(eventName As SCardMonitor, unknown As CardStatusEventArgs)
-        SendUID()
+        If readingMode = 1 OrElse readingMode = 2 Then
+            SendUID4Byte()
+        ElseIf readingMode = 3 OrElse readingMode = 4 Then
+            sendUID7Byte()
+        End If
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -61,7 +65,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btnStartMonitor_Click(sender As Object, e As EventArgs) Handles btnStartMonitor.Click
-        If txtReadingMode.Text <> 1 AndAlso txtReadingMode.Text <> 2 Then
+        If txtReadingMode.Text <> 1 AndAlso txtReadingMode.Text <> 2 AndAlso txtReadingMode.Text <> 3 AndAlso txtReadingMode.Text <> 4 Then
             MessageBox.Show("Error: Reading mode not macth the preset.")
         Else
             If isstart = True Then
@@ -78,7 +82,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Function SendUID()
+    Function SendUID4Byte()
         Try
             Using context = _contextFactory.Establish(SCardScope.System)
                 Using rfidReader = context.ConnectReader(readerName, SCardShareMode.Shared, SCardProtocol.Any)
@@ -93,7 +97,12 @@ Public Class frmMain
                         Dim bytesReceived = rfidReader.Transmit(sendPci, command, command.Length, receivePci, receiveBuffer, receiveBuffer.Length)
                         Dim responseApdu = New ResponseApdu(receiveBuffer, bytesReceived, IsoCase.Case2Short, rfidReader.Protocol)
 
-                        If readingMode = 2 Then
+                        If readingMode = 1 Then
+                            Dim uid As String = BitConverter.ToString(responseApdu.GetData())
+                            uid = uid.Replace("-", "")
+
+                            SendKeys.SendWait(uid + "{ENTER}")
+                        ElseIf readingMode = 2 Then
                             Dim uid As Byte() = New Byte(3) {}
                             Dim revuid As Byte() = New Byte(3) {}
                             Array.Copy(responseApdu.GetData(), uid, 4)
@@ -104,11 +113,48 @@ Public Class frmMain
                             uid2 = uid2.Replace("-", "")
 
                             SendKeys.SendWait(uid2 + "{ENTER}")
-                        Else
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch
+            'Error Handling should be developed
+        End Try
+
+        Return True
+    End Function
+
+    Function SendUID7Byte()
+        Try
+            Using context = _contextFactory.Establish(SCardScope.System)
+                Using rfidReader = context.ConnectReader(readerName, SCardShareMode.Shared, SCardProtocol.Any)
+                    Using rfidReader.Transaction(SCardReaderDisposition.Leave)
+
+                        Dim apdu As Byte() = {&HFF, &HCA, &H0, &H0, &H7}
+                        Dim sendPci = SCardPCI.GetPci(rfidReader.Protocol)
+                        Dim receivePci = New SCardPCI()
+
+                        Dim receiveBuffer = New Byte(255) {}
+                        Dim command = apdu.ToArray()
+                        Dim bytesReceived = rfidReader.Transmit(sendPci, command, command.Length, receivePci, receiveBuffer, receiveBuffer.Length)
+                        Dim responseApdu = New ResponseApdu(receiveBuffer, bytesReceived, IsoCase.Case2Short, rfidReader.Protocol)
+
+                        If readingMode = 3 Then
                             Dim uid As String = BitConverter.ToString(responseApdu.GetData())
                             uid = uid.Replace("-", "")
 
                             SendKeys.SendWait(uid + "{ENTER}")
+                        ElseIf readingMode = 4 Then
+                            Dim uid As Byte() = New Byte(6) {}
+                            Dim revuid As Byte() = New Byte(6) {}
+                            Array.Copy(responseApdu.GetData(), uid, 7)
+                            Array.Copy(uid, revuid, 7)
+                            Array.Reverse(revuid, 0, 7)
+
+                            Dim uid2 As String = BitConverter.ToString(revuid)
+                            uid2 = uid2.Replace("-", "")
+
+                            SendKeys.SendWait(uid2 + "{ENTER}")
                         End If
                     End Using
                 End Using
