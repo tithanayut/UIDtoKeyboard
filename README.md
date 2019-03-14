@@ -4,9 +4,11 @@ Read RFID/NFC Tag UID and key-in as a keyboard input (keyboard emulation)
 ## Quick Overview
 This software purpose is to read Contactless Smart Card UID (Unique Identifier) and emulate as a keyboard key-in to the position where the cursor is active.
 
-The software contains 2 selectable mode of reading:
-1-Default mode (e.g. 92A78230) and 
-2-Reversed Hex mode (e.g. 3082A792)
+The software contains 4 selectable mode (as of version 1.1.0) of reading:  
+1- 4 Byte UID Mode (e.g. 92A78230)  
+2- 4 Byte Reversed Hex mode (e.g. 3082A792)  
+3- 7 Byte UID Mode  
+4- 7 Byte Reversed Hex mode
 
 ## Installing
 If you are running a windows base operating system, download the release at https://github.com/tithanayut/UIDtoKeyboard/releases/tag/1.0.0, extract the zip file and launch the executable file inside. The software should works stright away.
