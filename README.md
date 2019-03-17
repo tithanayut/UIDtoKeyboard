@@ -18,7 +18,7 @@ In case that the software can't be launch, check that .Net Framework 4.0 is inst
 This software doesn't support Android, macOS or Linux.
 
 ## Running the software
-The configuration is very simple. Simply plug in the PC/SC compatible reader. Launch the software, choose the reader and reading mode (type in 1 or 2). Finally, click on Start Monitor.
+The configuration is very simple. Simply plug in the PC/SC compatible reader. Launch the software, choose the reader and reading mode. Finally, click on Start Monitor.
 
 To test the software, open notepad or program you wish to test with, put the card on the reader and the software should type in the card UID right away. 
 
@@ -35,7 +35,7 @@ The program is tested with ACS ACR122U reader and everything is working as descr
 According to the PC/SC Library, this software support all of PC/SC compatible reader.
 
 ## Authors
-Code/project developed by Thanayut T.<br>
+Code/project developed by Thanayut T.  
 PC/SC wrapper classes for .NET developed by Daniel Mueller, see https://github.com/danm-de/pcsc-sharp/.
 
 ## License
@@ -44,4 +44,4 @@ This software and its code license under BSD 2-Clause License. Feel free to use,
 Note: This software use PC/SC wrapper classes for .NET developed by Daniel Mueller, for license see: https://github.com/danm-de/pcsc-sharp/blob/master/COPYING.
 
 
-Keyword: Read UID, Keyboard Emulation, Card UID to Keyboard, UID Keyboard Input
+Keyword: Read UID and Keyboard Emulation, Card UID to Keyboard, UID Keyboard Input
