@@ -11,7 +11,7 @@ The software contains 4 selectable mode (as of version 1.1.0) of reading:
 4- 7 Byte Reversed Hex mode
 
 ## Installing
-If you are running a windows base operating system, download the release at https://github.com/tithanayut/UIDtoKeyboard/releases/tag/1.0.0, extract the zip file and launch the executable file inside. The software should works stright away.
+If you are running a windows base operating system, download the release at https://github.com/tithanayut/UIDtoKeyboard/releases/, extract the zip file and launch the executable file inside. The software should works stright away.
 
 In case that the software can't be launch, check that .Net Framework 4.0 is installed on your PC.
 
