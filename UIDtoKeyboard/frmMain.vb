@@ -52,7 +52,9 @@ Public Class frmMain
         If readingMode = 1 OrElse readingMode = 2 Then
             SendUID4Byte()
         ElseIf readingMode = 3 OrElse readingMode = 4 Then
-            sendUID7Byte()
+            SendUID7Byte()
+        ElseIf readingMode = 5 OrElse readingMode = 6 Then
+            SendUID8H10D()
         End If
     End Sub
 
@@ -65,8 +67,8 @@ Public Class frmMain
     End Sub
 
     Private Sub btnStartMonitor_Click(sender As Object, e As EventArgs) Handles btnStartMonitor.Click
-        If txtReadingMode.Text <> 1 AndAlso txtReadingMode.Text <> 2 AndAlso txtReadingMode.Text <> 3 AndAlso txtReadingMode.Text <> 4 Then
-            MessageBox.Show("Error: Reading mode not macth the preset.")
+        If txtReadingMode.Text <> 1 AndAlso txtReadingMode.Text <> 2 AndAlso txtReadingMode.Text <> 3 AndAlso txtReadingMode.Text <> 4 AndAlso txtReadingMode.Text <> 5 AndAlso txtReadingMode.Text <> 6 Then
+            MessageBox.Show("Error: Reading mode not match the preset.")
         Else
             If isstart = True Then
                 monitor.Cancel()
@@ -118,6 +120,48 @@ Public Class frmMain
                 End Using
             End Using
         Catch
+            'Error Handling should be developed
+        End Try
+
+        Return True
+    End Function
+
+    Function SendUID8H10D()
+        Try
+            Using context = _contextFactory.Establish(SCardScope.System)
+                Using rfidReader = context.ConnectReader(readerName, SCardShareMode.Shared, SCardProtocol.Any)
+                    Using rfidReader.Transaction(SCardReaderDisposition.Leave)
+
+                        Dim apdu As Byte() = {&HFF, &HCA, &H0, &H0, &H4}
+                        Dim sendPci = SCardPCI.GetPci(rfidReader.Protocol)
+                        Dim receivePci = New SCardPCI()
+
+                        Dim receiveBuffer = New Byte(255) {}
+                        Dim command = apdu.ToArray()
+                        Dim bytesReceived = rfidReader.Transmit(sendPci, command, command.Length, receivePci, receiveBuffer, receiveBuffer.Length)
+                        Dim responseApdu = New ResponseApdu(receiveBuffer, bytesReceived, IsoCase.Case2Short, rfidReader.Protocol)
+
+
+                        Dim uid As String
+                        If readingMode = 6 Then
+
+                            uid = BitConverter.ToUInt32(responseApdu.GetData(), 0)
+
+                        ElseIf readingMode = 5 Then
+                            Dim revuid As Byte() = New Byte(4) {}
+
+                            Array.Copy(responseApdu.GetData(), revuid, 4)
+                            Array.Reverse(revuid, 0, 4)
+
+                            uid = BitConverter.ToUInt32(revuid, 0)
+
+                        End If
+                        SendKeys.SendWait(uid + "{ENTER}")
+                    End Using
+                End Using
+            End Using
+        Catch
+            Console.WriteLine("Erreur 8H10D")
             'Error Handling should be developed
         End Try
 
