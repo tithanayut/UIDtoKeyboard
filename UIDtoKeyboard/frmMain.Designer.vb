@@ -97,10 +97,10 @@ Partial Class frmMain
         Me.lblInst2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lblInst2.Location = New System.Drawing.Point(567, 59)
         Me.lblInst2.Name = "lblInst2"
-        Me.lblInst2.Size = New System.Drawing.Size(217, 72)
+        Me.lblInst2.Size = New System.Drawing.Size(218, 108)
         Me.lblInst2.TabIndex = 7
         Me.lblInst2.Text = "1- Card UID (4 Byte)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2- Card UID (4 Byte + Reverse)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3- Card UID (7 Byte)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "4- Ca" &
-    "rd UID (7 Byte + Reverse) "
+    "rd UID (7 Byte + Reverse) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "5- Card UID (8H10D)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "6- Card UID (8H10D + Reverse)"
         '
         'txtReadingMode
         '
